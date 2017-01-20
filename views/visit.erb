@@ -23,8 +23,8 @@
       <label for="exampleInputEmail2">Choose your barber</label>
           
       <select name="barber">
-        <option value="Borovitsky Alexander">Borovitsky Alexander</option>
-        <option value="Borovitsky Lev">Borovitsky Lev</option>
+        <option <%= @barber == 'Borovitsky Alexander' ? 'selected' : '' %>>Borovitsky Alexander</option>
+        <option <%= @barber == 'Borovitsky Lev' ? 'selected' : '' %>>Borovitsky Lev</option>
       </select>
   </div>
 
