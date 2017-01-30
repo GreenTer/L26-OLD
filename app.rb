@@ -2,20 +2,25 @@
 require 'sinatra'
 require 'rubygems'
 require 'sqlite3'
-#require 'sinatra/reloader'
+
+def get_db
+	db = SQLite3::Database.new 'barbershop.db'
+	db.results_as_hash = true
+	return db
+end
 
 configure do
-	@db = SQLite3::Database.new 'barbershop.db'
-	@db.execute 'CREATE TABLE IF NOT EXISTS  
-		"Users" 
+	db = get_db
+	db.execute 'CREATE TABLE IF NOT EXISTS
+		"Users"
 		(
-			"Id" INTEGER PRIMARY KEY AUTOINCREMENT, 
-			"username", TEXT,
+			"id" INTEGER PRIMARY KEY AUTOINCREMENT,
+			"username" TEXT,
 			"phone" TEXT,
 			"datestamp" TEXT,
 			"barber" TEXT,
 			"color" TEXT
-		);'
+		)'
 end
 
 get '/' do
@@ -53,7 +58,19 @@ post "/visit" do
 		return erb :visit
 	end
 
-	erb "Dear #{@user_name}! Your barber: #{@barber}. We will see you: #{@user_time} & before we will call you #{@user_phone}! Your color: #{@color}"
+	db = get_db
+	db.execute 'insert into
+		Users
+		(
+			username,
+			phone,
+			datestamp,
+			barber,
+			color
+		)
+		values (?, ?, ?, ?, ?)', [@user_name, @user_phone, @user_time, @barber, @color]
+
+	erb "<h2>Thank you! We will see you #{@user_time}</h2>"
 end
 
 #def is_parameters_empty? hh

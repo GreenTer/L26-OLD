@@ -1,6 +1,20 @@
 <h2>Make an appointment</h2>
 <p>On this page, you can write to our Barber Shop!</p>
 
+<script type="text/javascript">
+
+$(function() {
+
+  // тут я могу написать любой javascript код, который исполнится
+  // после загрузки страницы
+
+  $('#color').simplecolorpicker();
+  $('#datetimepicker').datetimepicker();
+
+});
+
+</script>
+
 <form action="/visit" method="POST" role="form">
 
   <div class="form-group">
@@ -15,7 +29,7 @@
 
   <div class="form-group">
     <label for="exampleInputEmail2">Datatime</label>
-    <input name="user_time" type="Name" class="form-control" placeholder="10.30" value ="<%=@user_time%>">
+    <input id="datetimepicker" name="user_time" type="Name" class="form-control" placeholder="10.30" value ="<%=@user_time%>">
   </div>
   
 
